@@ -53,6 +53,7 @@ Server runs at `http://localhost:8000`. Interactive docs available at `http://lo
 
 ## Swagger UI
 
-![Swagger screenshot](swagger-screenshot.png)
+![Swagger screenshot](<img width="713" height="415" alt="Screenshot 2026-08-13 115758" src="https://github.com/user-attachments/assets/bc9091dc-51e6-4c9d-9e22-6c0d410d157d" />
+)
 
 Bearer auth is fully wired up — click **Authorize**, paste your access token, and test any protected route directly from the browser.
