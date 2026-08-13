@@ -1,9 +1,11 @@
-from fastapi import FastAPI, HTTPException, Header, Depends
+from fastapi import FastAPI, HTTPException, Depends
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
-from typing import Optional
 from auth import supabase
 
 app = FastAPI(title="FlyRank Auth API")
+
+bearer_scheme = HTTPBearer()
 
 class AuthRequest(BaseModel):
     email: str
@@ -11,11 +13,8 @@ class AuthRequest(BaseModel):
 
 
 # --- Reusable auth guard (dependency) ---
-def get_current_user(authorization: Optional[str] = Header(None)):
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Access token required")
-
-    token = authorization.split(" ")[1]
+def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme)):
+    token = credentials.credentials
 
     try:
         user_response = supabase.auth.get_user(token)
